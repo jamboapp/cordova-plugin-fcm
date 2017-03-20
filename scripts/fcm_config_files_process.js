@@ -34,12 +34,12 @@ var config = fs.readFileSync("config.xml").toString()
 var name = getValue(config, "name")
 
 if (directoryExists("platforms/ios")) {
-	var path = "GoogleService-Info.plist";
+    var path = "GoogleService-Info.plist";
 
     if (fileExists( path )) {
       try {
         var contents = fs.readFileSync(path).toString();
-        fs.writeFileSync("platforms/ios/" + name + "/Resources/GoogleService-Info.plist", contents)
+        //fs.writeFileSync("platforms/ios/" + name + "/Resources/GoogleService-Info.plist", contents)
       } catch(err) {
         process.stdout.write(err);
       }
