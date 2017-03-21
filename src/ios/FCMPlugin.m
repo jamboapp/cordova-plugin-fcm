@@ -24,10 +24,10 @@ static FCMPlugin *fcmPluginInstance;
     return fcmPluginInstance;
 }
 
-- (void) ready:(CDVInvokedUrlCommand *)command
+- (void) registerForNotifications:(CDVInvokedUrlCommand *)command
 {
     NSLog(@"Cordova view ready");
-		[AppDelegate register_for_notifications];
+		[AppDelegate registerForNotifications];
     fcmPluginInstance = self;
     [self.commandDelegate runInBackground:^{
 

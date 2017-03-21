@@ -7,7 +7,7 @@
 }
 
 + (FCMPlugin *) fcmPlugin;
-- (void)ready:(CDVInvokedUrlCommand*)command;
+- (void)registerForNotifications:(CDVInvokedUrlCommand*)command;
 - (void)getToken:(CDVInvokedUrlCommand*)command;
 - (void)subscribeToTopic:(CDVInvokedUrlCommand*)command;
 - (void)unsubscribeFromTopic:(CDVInvokedUrlCommand*)command;

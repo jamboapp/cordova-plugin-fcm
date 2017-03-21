@@ -12,7 +12,7 @@
 
 @interface AppDelegate (FCMPlugin)
 
-+ (void)register_for_notifications;
++ (void)registerForNotifications;
 + (NSData*)getLastPush;
 
 @end

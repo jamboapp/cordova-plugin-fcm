@@ -37,7 +37,7 @@
 static NSData *lastPush;
 NSString *const kGCMMessageIDKey = @"gcm.message_id";
 
-+ (void)register_for_notifications {
++ (void)registerForNotifications {
 
     // Register for remote notifications. This shows a permission dialog
     if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_7_1) {
