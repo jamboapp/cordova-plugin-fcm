@@ -38,7 +38,7 @@ FCMPlugin.prototype.onTokenRefreshReceived = function(token){
 }
 // FIRE READY - SHOW IOS NOTIFICATIONS AUTHORIZATION POP-UP //
 FCMPlugin.prototype.registerForNotifications = function(){
-	exec(function(result){ console.log("FCMPlugin Ready OK") }, function(result){ console.log("FCMPlugin Ready ERROR") }, "FCMPlugin",'ready',[]);
+	exec(function(result){ console.log("FCMPlugin Ready OK") }, function(result){ console.log("FCMPlugin Ready ERROR") }, "FCMPlugin",'registerForNotifications',[]);
 }
 
 
