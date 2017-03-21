@@ -37,32 +37,18 @@
 static NSData *lastPush;
 NSString *const kGCMMessageIDKey = @"gcm.message_id";
 
-//Method swizzling
-+ (void)load
-{
-    Method original =  class_getInstanceMethod(self, @selector(application:didFinishLaunchingWithOptions:));
-    Method custom =    class_getInstanceMethod(self, @selector(application:customDidFinishLaunchingWithOptions:));
-    method_exchangeImplementations(original, custom);
-}
++ (void)register_for_notifications {
 
-- (BOOL)application:(UIApplication *)application customDidFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-
-    [self application:application customDidFinishLaunchingWithOptions:launchOptions];
-
-    NSLog(@"DidFinishLaunchingWithOptions");
-
-
-    // Register for remote notifications. This shows a permission dialog on first run, to
-    // show the dialog at a more appropriate time move this registration accordingly.
+    // Register for remote notifications. This shows a permission dialog
     if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_7_1) {
         // iOS 7.1 or earlier. Disable the deprecation warnings.
-#pragma clang diagnostic push 
+#pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
         UIRemoteNotificationType allNotificationTypes =
         (UIRemoteNotificationTypeSound |
          UIRemoteNotificationTypeAlert |
          UIRemoteNotificationTypeBadge);
-        [application registerForRemoteNotificationTypes:allNotificationTypes];
+        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:allNotificationTypes];
 #pragma clang diagnostic pop
     } else {
         // iOS 8 or later
@@ -100,9 +86,9 @@ NSString *const kGCMMessageIDKey = @"gcm.message_id";
     };
     // [END configure_firebase]
     // Add observer for InstanceID token refresh callback.
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tokenRefreshNotification:)
+		AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    [[NSNotificationCenter defaultCenter] addObserver:appDelegate selector:@selector(tokenRefreshNotification:)
                                                  name:kFIRInstanceIDTokenRefreshNotification object:nil];
-    return YES;
 }
 
 // [START message_handling]
