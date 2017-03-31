@@ -131,9 +131,9 @@ static FCMPlugin *fcmPluginInstance;
     appInForeground = YES;
 }
 
--(BOOL) isPushEnabled
-{
-    return [[UIApplication sharedApplication] isRegisteredForRemoteNotifications];
+- (void) isPushEnabled:(CDVInvokedUrlCommand*)command {
+    CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsBool:[[UIApplication sharedApplication] isRegisteredForRemoteNotifications]];
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
 @end
