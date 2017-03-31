@@ -61,6 +61,13 @@ public class FCMPlugin extends CordovaPlugin {
 					}
 				});
 			}
+			else if (action.equals("isPushEnabled")) {
+				cordova.getActivity().runOnUiThread(new Runnable() {
+					public void run() {
+						callbackContext.success(true);
+					}
+				});
+			}
 			// NOTIFICATION CALLBACK REGISTER //
 			else if (action.equals("registerNotification")) {
 				notificationCallBackReady = true;
