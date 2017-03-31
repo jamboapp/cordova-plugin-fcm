@@ -20,22 +20,22 @@ static NSString *tokenRefreshCallback = @"FCMPlugin.onTokenRefreshReceived";
 static FCMPlugin *fcmPluginInstance;
 
 + (FCMPlugin *) fcmPlugin {
-
+    
     return fcmPluginInstance;
 }
 
 - (void) registerForNotifications:(CDVInvokedUrlCommand *)command
 {
     NSLog(@"Cordova view ready");
-		[AppDelegate registerForNotifications];
+    [AppDelegate registerForNotifications];
     fcmPluginInstance = self;
     [self.commandDelegate runInBackground:^{
-
+        
         CDVPluginResult* pluginResult = nil;
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     }];
-
+    
 }
 
 // GET TOKEN //
@@ -78,13 +78,13 @@ static FCMPlugin *fcmPluginInstance;
 - (void) registerNotification:(CDVInvokedUrlCommand *)command
 {
     NSLog(@"view registered for notifications");
-
+    
     notificatorReceptorReady = YES;
     NSData* lastPush = [AppDelegate getLastPush];
     if (lastPush != nil) {
         [FCMPlugin.fcmPlugin notifyOfMessage:lastPush];
     }
-
+    
     CDVPluginResult* pluginResult = nil;
     pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
@@ -95,7 +95,7 @@ static FCMPlugin *fcmPluginInstance;
     NSString *JSONString = [[NSString alloc] initWithBytes:[payload bytes] length:[payload length] encoding:NSUTF8StringEncoding];
     NSString * notifyJS = [NSString stringWithFormat:@"%@(%@);", notificationCallback, JSONString];
     NSLog(@"stringByEvaluatingJavaScriptFromString %@", notifyJS);
-
+    
     if ([self.webView respondsToSelector:@selector(stringByEvaluatingJavaScriptFromString:)]) {
         [(UIWebView *)self.webView stringByEvaluatingJavaScriptFromString:notifyJS];
     } else {
@@ -107,7 +107,7 @@ static FCMPlugin *fcmPluginInstance;
 {
     NSString * notifyJS = [NSString stringWithFormat:@"%@('%@');", tokenRefreshCallback, token];
     NSLog(@"stringByEvaluatingJavaScriptFromString %@", notifyJS);
-
+    
     if ([self.webView respondsToSelector:@selector(stringByEvaluatingJavaScriptFromString:)]) {
         [(UIWebView *)self.webView stringByEvaluatingJavaScriptFromString:notifyJS];
     } else {
@@ -132,8 +132,13 @@ static FCMPlugin *fcmPluginInstance;
 }
 
 - (void) isPushEnabled:(CDVInvokedUrlCommand*)command {
-    CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsBool:[[UIApplication sharedApplication] isRegisteredForRemoteNotifications]];
-    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+    NSLog(@"get push status");
+    [self.commandDelegate runInBackground:^{
+        BOOL isEnabled = [[UIApplication sharedApplication] isRegisteredForRemoteNotifications];
+        CDVPluginResult* pluginResult = nil;
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsBool:isEnabled];
+        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+    }];
 }
 
 @end
