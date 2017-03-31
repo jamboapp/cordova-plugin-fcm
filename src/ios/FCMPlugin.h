@@ -16,5 +16,5 @@
 - (void)notifyOfTokenRefresh:(NSString*) token;
 - (void)appEnterBackground;
 - (void)appEnterForeground;
-
+- (BOOL)isPushEnabled;
 @end
