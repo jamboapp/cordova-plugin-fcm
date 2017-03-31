@@ -131,4 +131,9 @@ static FCMPlugin *fcmPluginInstance;
     appInForeground = YES;
 }
 
+-(BOOL) isPushEnabled
+{
+    return [[UIApplication sharedApplication] isRegisteredForRemoteNotifications];
+}
+
 @end
