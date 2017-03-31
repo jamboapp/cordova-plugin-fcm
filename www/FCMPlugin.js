@@ -41,7 +41,7 @@ FCMPlugin.prototype.registerForNotifications = function(){
 	exec(function(result){ console.log("FCMPlugin Ready OK") }, function(result){ console.log("FCMPlugin Ready ERROR") }, "FCMPlugin",'registerForNotifications',[]);
 }
 
-FCMPlugin.prototype.isPushEnabled = function(callback){
+FCMPlugin.prototype.isPushEnabled = function(success, error){
 	exec(success, error, "FCMPlugin", 'isPushEnabled', []);
 }
 
